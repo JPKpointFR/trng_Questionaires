@@ -1,4 +1,4 @@
-question1 = ["la France", "Marseille", "Nice", "Paris", "Nantes"]
+"""question1 = ["la France", "Marseille", "Nice", "Paris", "Nantes"]
 question2 = ["l'Italie", "Milan", "Naple", "Vatican", "Rome"]
 question3 = ["l'Alemagne", "Berlin", "Dortmund", "Munich", "Leverkussen"]
 question4 = ["l'Angleterre", "Manchester", "Londre", "Liverpool", "Brighton"]
@@ -23,16 +23,83 @@ def question(pays, ville1, ville2, ville3, ville4, breponse):
 
 
 score = 0
-question(question1[0], question1[1], question1[2],
-         question1[3], question1[4], "c")
+question(*question1, "c")
 
-question(question2[0], question2[1], question2[2],
-         question2[3], question2[4], "d")
+question(*question2, "d")
 
-question(question3[0], question3[1], question3[2],
-         question3[3], question3[4], "a")
+question(*question3, "a")
 
-question(question4[0], question4[1], question4[2],
-         question4[3], question4[4], "b")
+question(*question4, "b")
 
-print(f"score final: {score}")
+print(f"score final: {score}")"""
+"""
+titre = question[0]
+choix = question[1]
+bonne_reponse = question[2]
+"""
+
+
+def demander_reponse_numerique_user(min, max):
+    reponse_str = input(f"Votre réponse (entre {min} et {max}): ")
+    try:
+        reponse_int = int(reponse_str)
+        if min <= reponse_int <= max:
+            return reponse_int
+
+        print(f"ERREUR: vous devez rentrez un chiffre entre {min} et {max}")
+    except:
+        print("ERREUR: veullez rentrez uniquement des chiffres")
+    return demander_reponse_numerique_user(min, max)
+
+
+def poser_question(question):
+    choix = question[1]
+    breponse = question[-1]
+    print("QUESTION")
+    titre = question[0]
+    print("  ", question[0])
+    for i in range(len(choix)):
+        print(f"  {i+1} - ", choix[i])
+    print()
+    resultat_reponse_correcte = False
+    reponse_int = demander_reponse_numerique_user(1, len(choix))
+    if choix[reponse_int - 1].lower() == breponse.lower():
+        print(f"Bonne réponse")
+        resultat_reponse_correcte = True  # return True
+    else:
+        print("Mauvaise réponse")
+
+    print()
+    return resultat_reponse_correcte
+    # return False
+
+
+question1 = ("Quelle est la capitale de la France ?",
+             ("Marseille", "Nice", "Paris", "Nantes", "Lille"), "Paris")
+
+question2 = ("Quelle est la capitale de l'Italie ?",
+             ("Milan", "Naple", "Vatican", "Rome"), "Rome")
+
+# poser_question(question1)
+
+# poser_question(question2)
+
+
+def lancer_questionnaire(questionnaire):
+    score = 0
+    for question in questionnaire:
+        poser_question(question)
+        score += 1
+    print(f"score final: {score}/{len(questionnaire)}")
+
+
+"""
+    questionnaire[]
+        question 
+        titre = "Quelle est la capitale de la France"
+        reponse = ("Marseille", "Nice", "Paris", "Nantes")
+"""
+
+questionnaire = (question1, question2)
+
+lancer_questionnaire(questionnaire)
